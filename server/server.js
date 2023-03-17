@@ -8,7 +8,7 @@ const todoRoutes = require('./routes/todo');
 const userRoutes = require('./routes/users');
 
 const checkJwt = auth({
-  audience: process.env.AUDIENCE || 'http://localhost:9000',
+  audience: 'http://localhost:9000',
   issuerBaseURL: 'https://dev-yi7wxr1jbz07puck.us.auth0.com/',
   tokenSigningAlg: 'RS256',
 });
@@ -22,6 +22,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/', checkJwt, todoRoutes);
-app.use('/', userRoutes);
+app.use('/', checkJwt, userRoutes);
 
 app.listen(port, () => console.log(`Connected to server on port ${port}.`));
